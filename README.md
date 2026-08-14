@@ -1,6 +1,8 @@
 # Galería Inmersiva PC PUMA XR
 
-Bienvenido a la Galería Inmersiva PC PUMA XR. Este es un MVP de una experiencia WebXR diseñada para ser ejecutada directamente en Meta Quest 3S (y navegadores modernos de PC), actuando como un portal hacia otras experiencias de realidad virtual.
+Bienvenido a la Galería Inmersiva PC PUMA XR. Este es un MVP de una experiencia WebXR diseñada para ser ejecutada directamente en Meta Quest 3S (y navegadores modernos de PC), actuando como un portal hacia otras experiencias de realidad virtual. 
+
+https://vickman123.github.io/TEST1-ZONAVR/
 
 ## Características
 
