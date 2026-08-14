@@ -28,6 +28,20 @@
         <main class="content">
             <p class="info-text">Explora nuestra galería inmersiva para descubrir simuladores, laboratorios y experiencias WebXR.</p>
             
+            <div class="dev-menu">
+                <label><strong>Modo de Visualización:</strong></label>
+                <div class="toggle-group">
+                    <label>
+                        <input type="radio" name="xrMode" value="vr" checked>
+                        Realidad Virtual (Inmersivo)
+                    </label>
+                    <label>
+                        <input type="radio" name="xrMode" value="ar">
+                        Realidad Mixta (Passthrough)
+                    </label>
+                </div>
+            </div>
+
             <div id="vr-button-container">
                 <!-- El botón de VR de Three.js se insertará aquí automáticamente -->
             </div>

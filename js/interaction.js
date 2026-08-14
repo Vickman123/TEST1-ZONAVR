@@ -1,11 +1,17 @@
 import * as THREE from 'three';
 import { XRControllerModelFactory } from 'three/addons/webxr/XRControllerModelFactory.js';
+import { XRHandModelFactory } from 'three/addons/webxr/XRHandModelFactory.js';
 
-export function setupInteraction(scene, renderer) {
+export function setupInteraction(scene, renderer, cameraGroup) {
     const interactables = [];
     let hoveredButton = null;
 
-    // Controladores
+    // Estado para Locomoción (Grab and Pull)
+    let draggingController = null;
+    const previousHandPosition = new THREE.Vector3();
+    const currentHandPosition = new THREE.Vector3();
+
+    // Controladores (Punteros)
     const controller1 = renderer.xr.getController(0);
     controller1.addEventListener('selectstart', onSelectStart);
     controller1.addEventListener('selectend', onSelectEnd);
@@ -27,6 +33,18 @@ export function setupInteraction(scene, renderer) {
     controllerGrip2.add(controllerModelFactory.createControllerModel(controllerGrip2));
     scene.add(controllerGrip2);
 
+    // Hand Tracking (Manos físicas)
+    const handModelFactory = new XRHandModelFactory();
+    
+    // Perfil 'spheres' es ligero y no requiere descargas extrañas de glTF por CORS
+    const hand1 = renderer.xr.getHand(0);
+    hand1.add(handModelFactory.createHandModel(hand1, 'spheres'));
+    scene.add(hand1);
+
+    const hand2 = renderer.xr.getHand(1);
+    hand2.add(handModelFactory.createHandModel(hand2, 'spheres'));
+    scene.add(hand2);
+
     // Rayos visibles
     const geometry = new THREE.BufferGeometry().setFromPoints([
         new THREE.Vector3(0, 0, 0),
@@ -45,7 +63,7 @@ export function setupInteraction(scene, renderer) {
     function onSelectStart(event) {
         const controller = event.target;
         
-        // Comprobar intersecciones al presionar el gatillo
+        // Comprobar intersecciones al presionar el gatillo / pellizcar
         tempMatrix.identity().extractRotation(controller.matrixWorld);
         raycaster.ray.origin.setFromMatrixPosition(controller.matrixWorld);
         raycaster.ray.direction.set(0, 0, -1).applyMatrix4(tempMatrix);
@@ -59,14 +77,19 @@ export function setupInteraction(scene, renderer) {
             if (object.userData && object.userData.isInteractable) {
                 // Redirigir a la URL
                 console.log("Navigating to: " + object.userData.url);
-                // En Quest, window.location.href en VR a veces saca al usuario o carga directo si es WebXR.
                 window.location.href = object.userData.url;
             }
+        } else {
+            // Si no intersectó con un botón, iniciar Locomoción (Drag)
+            draggingController = controller;
+            previousHandPosition.setFromMatrixPosition(controller.matrixWorld);
         }
     }
 
     function onSelectEnd(event) {
-        // Nada de momento
+        if (draggingController === event.target) {
+            draggingController = null;
+        }
     }
 
     function getIntersections(controller) {
@@ -77,13 +100,11 @@ export function setupInteraction(scene, renderer) {
     }
 
     function update() {
+        // --- 1. Lógica de Hover (Rayos) ---
         let intersectionFound = false;
-
-        // Comprobar intersecciones del controller 1
         let intersects = getIntersections(controller1);
         
         if (intersects.length === 0) {
-            // Si el 1 no intersecta, probar el 2
             intersects = getIntersections(controller2);
         }
 
@@ -104,6 +125,25 @@ export function setupInteraction(scene, renderer) {
         if (!intersectionFound && hoveredButton) {
             hoveredButton.userData.station.setHoverState(false);
             hoveredButton = null;
+        }
+
+        // --- 2. Lógica de Locomoción (Grab and Pull) ---
+        if (draggingController) {
+            currentHandPosition.setFromMatrixPosition(draggingController.matrixWorld);
+            
+            // Calculamos el diferencial de movimiento de la mano
+            const delta = new THREE.Vector3().subVectors(currentHandPosition, previousHandPosition);
+            
+            // Movemos la cámara en dirección CONTRARIA (si jalo hacia mi, me muevo hacia adelante)
+            // IMPORTANTE: Ignoramos el eje Y para no volar o hundirnos en el suelo
+            delta.y = 0; 
+            
+            cameraGroup.position.sub(delta);
+            
+            // Actualizamos la posición previa para el siguiente frame (en coordenadas locales de la cámara)
+            // Dado que movimos el cameraGroup, la posición en el mundo de la mano ya incluye ese movimiento,
+            // pero para evitar feedback positivo infinito, leemos la nueva posición post-movimiento
+            previousHandPosition.setFromMatrixPosition(draggingController.matrixWorld);
         }
     }
 

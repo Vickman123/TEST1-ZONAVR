@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { VRButton } from 'three/addons/webxr/VRButton.js';
+import { ARButton } from 'three/addons/webxr/ARButton.js';
 import { createGallery } from './gallery.js';
 import { loadExperiences, renderCatalog } from './experienceLoader.js';
 import { ExperienceStation } from './ExperienceStation.js';
@@ -27,30 +28,57 @@ async function init() {
     cameraGroup.add(camera);
 
     // Setup de Renderizador
-    renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); // alpha: true necesario para AR
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.xr.enabled = true;
     container.appendChild(renderer.domElement);
 
-    // Añadir botón VR a la UI 2D
-    const vrButton = VRButton.createButton(renderer);
-    document.getElementById('vr-button-container').appendChild(vrButton);
+    // Lógica para alternar entre AR y VR
+    const buttonContainer = document.getElementById('vr-button-container');
+    let currentMode = 'vr';
+    let currentXRButton = null;
+
+    function updateXRButton(mode) {
+        if (currentXRButton) {
+            buttonContainer.removeChild(currentXRButton);
+        }
+        currentMode = mode;
+        if (mode === 'vr') {
+            currentXRButton = VRButton.createButton(renderer);
+        } else {
+            currentXRButton = ARButton.createButton(renderer, { requiredFeatures: ['hit-test'] });
+        }
+        buttonContainer.appendChild(currentXRButton);
+    }
+
+    // Inicializar con VR
+    updateXRButton('vr');
+
+    // Escuchar cambios en los radio buttons
+    const modeRadios = document.querySelectorAll('input[name="xrMode"]');
+    modeRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            updateXRButton(e.target.value);
+        });
+    });
     
-    // Ocultar UI al entrar en VR
+    // Ocultar UI al entrar en XR
     renderer.xr.addEventListener('sessionstart', () => {
         document.body.classList.add('in-vr');
+        gallery.setMode(currentMode); // Ajustar entorno visual según el modo
     });
     renderer.xr.addEventListener('sessionend', () => {
         document.body.classList.remove('in-vr');
+        gallery.setMode('vr'); // Restaurar a VR (normal) al salir
     });
 
     // Cargar Entorno (Galería)
     gallery = createGallery(scene);
 
-    // Cargar Interacciones (Controladores)
-    interaction = setupInteraction(scene, renderer);
+    // Cargar Interacciones (Controladores y Hand Tracking)
+    interaction = setupInteraction(scene, renderer, cameraGroup);
 
     // Cargar Datos (Experiencias)
     const experiences = await loadExperiences('./experiencias.json');

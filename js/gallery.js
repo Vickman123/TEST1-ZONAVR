@@ -33,6 +33,19 @@ export function createGallery(scene) {
     return {
         update: (time) => {
             // Animaciones del entorno si las hay
+        },
+        setMode: (mode) => {
+            if (mode === 'ar') {
+                scene.background = null;
+                scene.fog = null;
+                floor.visible = false;
+                gridHelper.visible = false;
+            } else {
+                scene.background = new THREE.Color(0x050810);
+                scene.fog = new THREE.Fog(0x050810, 2, 12);
+                floor.visible = true;
+                gridHelper.visible = true;
+            }
         }
     };
 }

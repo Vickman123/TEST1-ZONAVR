@@ -1,16 +1,15 @@
 # Galería Inmersiva PC PUMA XR
 
-Bienvenido a la Galería Inmersiva PC PUMA XR. Este es un MVP de una experiencia WebXR diseñada para ser ejecutada directamente en Meta Quest 3S (y navegadores modernos de PC), actuando como un portal hacia otras experiencias de realidad virtual. 
-
-https://vickman123.github.io/TEST1-ZONAVR/
+Bienvenido a la Galería Inmersiva PC PUMA XR. Este es un MVP de una experiencia WebXR diseñada para ser ejecutada directamente en Meta Quest 3S (y navegadores modernos de PC), actuando como un portal hacia otras experiencias de realidad virtual.
 
 ## Características
 
-- 🚀 **Tecnología Vanilla**: Desarrollado con HTML, CSS, JavaScript y Three.js puros. No requiere Node.js, NPM, ni complicados procesos de build.
-- 👓 **Soporte WebXR Nativo**: Optimizado para funcionar desde el navegador de Meta Quest.
-- 📁 **JSON Dinámico**: Todas las experiencias se cargan dinámicamente desde `experiencias.json`, haciendo muy sencillo escalar el catálogo sin tocar el código fuente.
-- 🎨 **Estética Institucional**: Diseño tecnológico con temática de PC PUMA / UNAM.
-- 💻 **Modo Dual**: Funciona en PC (con una UI tipo catálogo 2D) y en VR (Galería 3D interactiva).
+- 🚀 **Tecnología Vanilla**: Desarrollado con HTML, CSS, JavaScript y Three.js puros.
+- 👓 **Soporte WebXR Nativo**: Optimizado para Meta Quest 3S.
+- 🥽 **Modo Dual AR/VR**: Selector en la pantalla inicial para visualizar en VR (Inmersivo) o AR (Realidad Mixta/Passthrough con cámara activa).
+- 🖐️ **Hand Tracking y Controladores**: Usa tus controladores físicos, o usa el seguimiento nativo de manos para apuntar e interactuar (pellizco).
+- 🚶 **Movimiento Libre ("Grab & Pull")**: Muévete por la galería pellizcando el vacío con tu mano y "jalando" el espacio hacia ti, sin necesidad de joysticks.
+- 📁 **JSON Dinámico**: Base de datos de experiencias escalable.
 
 ---
 
@@ -110,10 +109,10 @@ Simplemente abre `experiencias.json`, busca la experiencia que deseas modificar 
 
 ---
 
-## 9. Qué funcionalidades requieren hand tracking
+## 9. Qué funcionalidades requieren hand tracking y cómo usarlas
 
-En esta Fase 1, se han habilitado **controladores** y un **raycaster visible (láser)** para garantizar máxima compatibilidad y evitar fallos si el usuario no tiene habilitado el hand tracking.
-El hand tracking se implementará de manera profunda en la Fase 2 para agarrar las tarjetas físicamente. Actualmente, la selección a distancia es la forma más fluida de operar el portal.
+- **Apuntar y Seleccionar**: Con el hand tracking activo (deja los mandos sobre la mesa), verás esferas representando tus manos. Para interactuar con los botones de la galería, apunta y haz un **gesto de pellizco** (junta el dedo índice con el pulgar) como si fuera el gatillo del control.
+- **Locomoción Drag (Grab and Pull)**: Si deseas moverte por la sala sin caminar físicamente, apunta hacia el aire (donde no haya ningún botón), haz el **gesto de pellizco y mantenlo cerrado**. Mueve tu mano en el aire como si estuvieras agarrando y jalando el espacio. La cámara se moverá suavemente en la dirección opuesta, permitiéndote "navegar" con tus brazos libremente.
 
 ---
 
