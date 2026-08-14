@@ -1,0 +1,52 @@
+[
+  {
+    "id": "rovr-run",
+    "nombre": "ROVR RUN",
+    "categoria": "Ciencia y Exploración",
+    "descripcion": "Experiencia WebXR de conducción de rover en marte.",
+    "imagen": "assets/images/rovr-run.jpg",
+    "url": "https://8w.8thwall.app/rovr-run/",
+    "duracion": "5-10 min",
+    "tipo": "WebXR"
+  },
+  {
+    "id": "archery-training",
+    "nombre": "Archery Training",
+    "categoria": "Entrenamiento",
+    "descripcion": "Simulador de tiro con arco inmersivo.",
+    "imagen": "assets/images/archery.jpg",
+    "url": "https://dmnshd.gg/games/archery-training",
+    "duracion": "5-10 min",
+    "tipo": "WebXR"
+  },
+  {
+    "id": "brushwork-vr",
+    "nombre": "Brushwork VR",
+    "categoria": "Arte",
+    "descripcion": "Lienzo inmersivo para pintura en 3D.",
+    "imagen": "assets/images/brushwork.jpg",
+    "url": "https://brushworkvr.com/paint",
+    "duracion": "5-10 min",
+    "tipo": "WebXR"
+  },
+  {
+    "id": "spider-man-vr",
+    "nombre": "Spider-Man VR",
+    "categoria": "Juegos",
+    "descripcion": "Balancéate como Spider-Man en WebXR.",
+    "imagen": "assets/images/spiderman.jpg",
+    "url": "https://vrsites.com/play/spider-man-vr/",
+    "duracion": "5-10 min",
+    "tipo": "WebXR"
+  },
+  {
+    "id": "moon-rider",
+    "nombre": "Moon Rider",
+    "categoria": "Música",
+    "descripcion": "Juego de ritmo musical en el espacio.",
+    "imagen": "assets/images/moonrider.jpg",
+    "url": "https://moonrider.xyz/",
+    "duracion": "5-10 min",
+    "tipo": "WebXR"
+  }
+]

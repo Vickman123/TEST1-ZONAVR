@@ -1,0 +1,163 @@
+:root {
+    --primary-blue: #002B5C; /* Azul UNAM */
+    --primary-gold: #D4AF37; /* Oro UNAM (aproximado) */
+    --dark-bg: #0F172A; /* Fondo tecnológico oscuro */
+    --panel-bg: #1E293B;
+    --text-light: #F8FAFC;
+    --text-muted: #94A3B8;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--text-light);
+    overflow: hidden; /* Para que el canvas de Three.js ocupe todo sin scroll */
+}
+
+/* El canvas de Three.js estará por detrás */
+canvas {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+#ui-container {
+    position: relative;
+    z-index: 10;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 100vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ocultar UI 2D al entrar a VR */
+body.in-vr #ui-container {
+    display: none;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.title {
+    font-size: 3rem;
+    color: var(--primary-gold);
+    margin-bottom: 0.5rem;
+}
+
+.title .highlight {
+    color: var(--text-light);
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 1.2rem;
+}
+
+.content {
+    flex: 1;
+    text-align: center;
+}
+
+.info-text {
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+#vr-button-container {
+    margin: 2rem 0;
+    display: flex;
+    justify-content: center;
+}
+
+/* Estilizar el botón por defecto de Three.js si es posible, o crear contenedor */
+#vr-button-container button {
+    position: relative !important;
+    left: auto !important;
+    bottom: auto !important;
+    margin: 0 auto;
+}
+
+.experiences-catalog {
+    margin-top: 4rem;
+    text-align: left;
+}
+
+.experiences-catalog h2 {
+    color: var(--primary-gold);
+    border-bottom: 2px solid var(--primary-blue);
+    padding-bottom: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.catalog-card {
+    background-color: var(--panel-bg);
+    border: 1px solid var(--primary-blue);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.catalog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    border-color: var(--primary-gold);
+}
+
+.catalog-card h3 {
+    margin-top: 0;
+    color: var(--primary-gold);
+}
+
+.catalog-card .category {
+    font-size: 0.85rem;
+    color: var(--primary-blue);
+    background-color: var(--primary-gold);
+    padding: 2px 8px;
+    border-radius: 12px;
+    display: inline-block;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+.catalog-card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+
+.catalog-btn {
+    display: inline-block;
+    background-color: var(--primary-blue);
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.catalog-btn:hover {
+    background-color: var(--primary-gold);
+    color: var(--primary-blue);
+}
+
+footer {
+    text-align: center;
+    padding: 2rem 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}

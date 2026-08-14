@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC PUMA XR - Galería Inmersiva</title>
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Import Map para Three.js y dependencias -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <!-- Interfaz 2D para PC / Mobile antes de entrar a VR -->
+    <div id="ui-container">
+        <header class="header">
+            <h1 class="title">PC PUMA <span class="highlight">XR</span></h1>
+            <p class="subtitle">Portal inmersivo de la UNAM hacia el multiverso educativo</p>
+        </header>
+
+        <main class="content">
+            <p class="info-text">Explora nuestra galería inmersiva para descubrir simuladores, laboratorios y experiencias WebXR.</p>
+            
+            <div id="vr-button-container">
+                <!-- El botón de VR de Three.js se insertará aquí automáticamente -->
+            </div>
+
+            <div class="experiences-catalog">
+                <h2>Experiencias Disponibles</h2>
+                <div id="catalog-grid" class="catalog-grid">
+                    <!-- Se llena dinámicamente con JS -->
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Desarrollado para PC PUMA - UNAM | Requiere Meta Quest o navegador compatible con WebXR</p>
+        </footer>
+    </div>
+
+    <!-- Módulo Principal JS -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
